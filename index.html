@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>Snake Game</title>
@@ -146,6 +146,191 @@ function restartGame() {
 
 // Start first time
 initGame();
+</script>
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Advanced Shooting Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #111;
+            color: white;
+            text-align: center;
+            font-family: Arial;
+        }
+        canvas {
+            background: black;
+            display: block;
+            margin: auto;
+            border: 2px solid white;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h2>
+🚀 Shooting Game | 
+Score: <span id="score">0</span> | 
+Lives: <span id="lives">3</span>
+</h2>
+
+<canvas id="game" width="400" height="600"></canvas>
+<br>
+<button onclick="restartGame()">Restart</button>
+
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+let player, bullets, enemies, score, lives, gameOver;
+let enemySpawnRate = 1000;
+
+function init() {
+    player = { x: 180, y: 550, width: 40, height: 20, speed: 6 };
+    bullets = [];
+    enemies = [];
+    score = 0;
+    lives = 3;
+    gameOver = false;
+    enemySpawnRate = 1000;
+
+    document.getElementById("score").innerText = score;
+    document.getElementById("lives").innerText = lives;
+}
+
+init();
+
+// Controls
+let keys = {};
+document.addEventListener("keydown", (e) => {
+    keys[e.code] = true;
+
+    if (e.code === "Space" && !gameOver) {
+        bullets.push({
+            x: player.x + player.width / 2 - 2,
+            y: player.y,
+            width: 4,
+            height: 10
+        });
+    }
+});
+document.addEventListener("keyup", (e) => {
+    keys[e.code] = false;
+});
+
+function spawnEnemy() {
+    if (!gameOver) {
+        enemies.push({
+            x: Math.random() * 360,
+            y: 0,
+            width: 40,
+            height: 20,
+            speed: 2 + Math.random() * 2
+        });
+    }
+}
+
+let spawnInterval = setInterval(spawnEnemy, enemySpawnRate);
+
+function update() {
+    if (gameOver) return;
+
+    // Move player
+    if (keys["ArrowLeft"] && player.x > 0)
+        player.x -= player.speed;
+
+    if (keys["ArrowRight"] && player.x < canvas.width - player.width)
+        player.x += player.speed;
+
+    // Move bullets
+    bullets.forEach((bullet, bIndex) => {
+        bullet.y -= 8;
+        if (bullet.y < 0) bullets.splice(bIndex, 1);
+    });
+
+    // Move enemies
+    enemies.forEach((enemy, eIndex) => {
+        enemy.y += enemy.speed;
+
+        // If enemy reaches bottom
+        if (enemy.y > canvas.height) {
+            enemies.splice(eIndex, 1);
+            lives--;
+            document.getElementById("lives").innerText = lives;
+
+            if (lives <= 0) {
+                gameOver = true;
+                alert("Game Over! Final Score: " + score);
+            }
+        }
+
+        // Collision
+        bullets.forEach((bullet, bIndex) => {
+            if (
+                bullet.x < enemy.x + enemy.width &&
+                bullet.x + bullet.width > enemy.x &&
+                bullet.y < enemy.y + enemy.height &&
+                bullet.y + bullet.height > enemy.y
+            ) {
+                enemies.splice(eIndex, 1);
+                bullets.splice(bIndex, 1);
+                score++;
+                document.getElementById("score").innerText = score;
+
+                // Increase difficulty every 10 points
+                if (score % 10 === 0) {
+                    clearInterval(spawnInterval);
+                    enemySpawnRate -= 100;
+                    if (enemySpawnRate < 300) enemySpawnRate = 300;
+                    spawnInterval = setInterval(spawnEnemy, enemySpawnRate);
+                }
+            }
+        });
+    });
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Player
+    ctx.fillStyle = "lime";
+    ctx.fillRect(player.x, player.y, player.width, player.height);
+
+    // Bullets
+    ctx.fillStyle = "yellow";
+    bullets.forEach(bullet =>
+        ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height)
+    );
+
+    // Enemies
+    ctx.fillStyle = "red";
+    enemies.forEach(enemy =>
+        ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height)
+    );
+}
+
+function gameLoop() {
+    update();
+    draw();
+    requestAnimationFrame(gameLoop);
+}
+
+function restartGame() {
+    init();
+}
+
+gameLoop();
 </script>
 
 </body>
