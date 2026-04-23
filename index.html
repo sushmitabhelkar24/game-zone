@@ -459,5 +459,24 @@ function restartGame() {
 createBoard();
 </script>
 
+<script>
+let balance = 1000;
+let withdrawAmount = 1200;
+
+if (withdrawAmount > balance) {
+    console.log("Insufficient funds");
+} else {
+    balance -= withdrawAmount;
+    console.log("New balance is", balance);
+}
+
+
+
+
+
+
+</script>
+
 </body>
 </html>
+
