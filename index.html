@@ -461,11 +461,124 @@ createBoard();
 
 <script>
 
-   board = ["", "", "", "", "", "", "", "", ""];
-    currentPlayer = "X";
-    gameActive = true;
-    statusText.innerText = "Player X's Turn";
-    createBoard();
+  // ==========================
+// 1. Arithmetic Operators
+// ==========================
+let a = 10, b = 3;
+
+console.log(a + b);  // 13
+console.log(a - b);  // 7
+console.log(a * b);  // 30
+console.log(a / b);  // 3.33
+console.log(a % b);  // 1
+console.log(a ** b); // 1000
+
+// ==========================
+// 2. Assignment Operators
+// ==========================
+let x = 5;
+x += 2;
+x -= 1;
+x *= 2;
+x /= 3;
+x %= 2;
+x **= 3;
+
+// ==========================
+// 3. Comparison Operators
+// ==========================
+let c = 5, d = "5";
+
+console.log(c == d);   // true
+console.log(c === d);  // false
+console.log(c != d);   // false
+console.log(c !== d);  // true
+console.log(c > 3);    // true
+console.log(c < 10);   // true
+console.log(c >= 5);   // true
+console.log(c <= 4);   // false
+
+// ==========================
+// 4. Logical Operators
+// ==========================
+let p = true, q = false;
+
+console.log(p && q); // false
+console.log(p || q); // true
+console.log(!p);     // false
+
+// ==========================
+// 5. Bitwise Operators
+// ==========================
+let m = 5, n = 1;
+
+console.log(m & n);  // 1
+console.log(m | n);  // 5
+console.log(m ^ n);  // 4
+console.log(~m);     // -6
+console.log(m << 1); // 10
+console.log(m >> 1); // 2
+
+// ==========================
+// 6. String Operator
+// ==========================
+let str1 = "Hello", str2 = "JS";
+console.log(str1 + " " + str2);
+
+// ==========================
+// 7. Ternary Operator
+// ==========================
+let age = 20;
+let result = age >= 18 ? "Adult" : "Minor";
+console.log(result);
+
+// ==========================
+// 8. Type Operators
+// ==========================
+console.log(typeof 42);
+
+let arr = [1,2,3];
+console.log(arr instanceof Array);
+
+// ==========================
+// 9. Increment / Decrement
+// ==========================
+let i = 5;
+console.log(i++); // 5
+console.log(++i); // 7
+console.log(i--); // 7
+console.log(--i); // 5
+
+// ==========================
+// 10. Nullish & Optional
+// ==========================
+let val = null;
+console.log(val ?? "Default");
+
+let user = {};
+console.log(user?.name);
+
+// ==========================
+// 11. Spread & Rest
+// ==========================
+let nums = [1,2,3];
+let newNums = [...nums, 4];
+
+function sum(...args) {
+  return args.reduce((a,b) => a + b, 0);
+}
+console.log(sum(1,2,3));
+
+// ==========================
+// 12. Other Operators
+// ==========================
+let obj = {a:1};
+delete obj.a;
+
+console.log("a" in obj);
+
+let z = (1,2,3);
+console.log(z); // 3
 
 
 
