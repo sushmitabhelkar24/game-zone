@@ -1,599 +1,90 @@
-<!--<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Snake Game</title>
-    <style>
-        body {
-            text-align: center;
-            background: #111;
-            color: white;
-            font-family: Arial;
-            margin: 0;
-        }
-        canvas {
-            background: black;
-            display: block;
-            margin: 20px auto;
-            border: 2px solid white;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
+// 🚀 JavaScript Functions Practice (All-in-One File)
 
-<h1>🐍 Snake Game</h1>
-<h2>Score: <span id="score">0</span></h2>
-<button onclick="restartGame()">Restart Game</button>
-<canvas id="game" width="400" height="400"></canvas>
-
-<script>
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
-
-const box = 20;
-const canvasSize = 400;
-
-let snake;
-let direction;
-let food;
-let score;
-let game;
-
-// Initialize Game
-function initGame() {
-    snake = [{ x: 9 * box, y: 9 * box }];
-    direction = "RIGHT";
-    food = randomFood();
-    score = 0;
-    document.getElementById("score").innerText = score;
-
-    if (game) clearInterval(game);
-    game = setInterval(draw, 100);
+// 1. Add Two Numbers
+function add(a, b) {
+    return a + b;
 }
+console.log("Add:", add(3, 5));
 
-document.addEventListener("keydown", function(event) {
-    if (["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(event.key)) {
-        event.preventDefault();
-    }
-    changeDirection(event);
-});
 
-function changeDirection(event) {
-    if (event.key === "ArrowLeft" && direction !== "RIGHT") {
-        direction = "LEFT";
-    } else if (event.key === "ArrowUp" && direction !== "DOWN") {
-        direction = "UP";
-    } else if (event.key === "ArrowRight" && direction !== "LEFT") {
-        direction = "RIGHT";
-    } else if (event.key === "ArrowDown" && direction !== "UP") {
-        direction = "DOWN";
-    }
+// 2. Even or Odd
+function checkEvenOdd(num) {
+    return num % 2 === 0 ? "Even" : "Odd";
 }
+console.log("Even/Odd:", checkEvenOdd(7));
 
-function randomFood() {
-    return {
-        x: Math.floor(Math.random() * 20) * box,
-        y: Math.floor(Math.random() * 20) * box
-    };
+
+// 3. Maximum of Two Numbers
+function max(a, b) {
+    return a > b ? a : b;
 }
+console.log("Max:", max(10, 20));
 
-function draw() {
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canvasSize, canvasSize);
 
-    // Draw snake
-    for (let i = 0; i < snake.length; i++) {
-        ctx.fillStyle = i === 0 ? "lime" : "green";
-        ctx.fillRect(snake[i].x, snake[i].y, box, box);
+// 4. Square of a Number
+function square(n) {
+    return n * n;
+}
+console.log("Square:", square(4));
+
+
+// 5. Greeting Function
+function greet(name) {
+    console.log("Hello, " + name);
+}
+greet("Rahul");
+
+
+// 6. Sum of Array
+function sumArray(arr) {
+    let sum = 0;
+    for (let i = 0; i < arr.length; i++) {
+        sum += arr[i];
     }
+    return sum;
+}
+console.log("Sum of array:", sumArray([1, 2, 3, 4]));
 
-    // Draw food
-    ctx.fillStyle = "red";
-    ctx.fillRect(food.x, food.y, box, box);
 
-    let headX = snake[0].x;
-    let headY = snake[0].y;
-
-    if (direction === "LEFT") headX -= box;
-    if (direction === "UP") headY -= box;
-    if (direction === "RIGHT") headX += box;
-    if (direction === "DOWN") headY += box;
-
-    // Check collision
-    if (
-        headX < 0 ||
-        headY < 0 ||
-        headX >= canvasSize ||
-        headY >= canvasSize ||
-        collision(headX, headY, snake)
-    ) {
-        clearInterval(game);
-        alert("Game Over! Final Score: " + score);
-        return;
+// 7. Factorial
+function factorial(n) {
+    let result = 1;
+    for (let i = 1; i <= n; i++) {
+        result *= i;
     }
+    return result;
+}
+console.log("Factorial:", factorial(5));
 
-    let newHead = { x: headX, y: headY };
 
-    if (headX === food.x && headY === food.y) {
-        score++;
-        document.getElementById("score").innerText = score;
-        food = randomFood();
+// 8. Positive / Negative / Zero
+function checkNumber(num) {
+    if (num > 0) {
+        return "Positive";
+    } else if (num < 0) {
+        return "Negative";
     } else {
-        snake.pop();
-    }
-
-    snake.unshift(newHead);
-}
-
-function collision(x, y, array) {
-    for (let i = 1; i < array.length; i++) {
-        if (x === array[i].x && y === array[i].y) {
-            return true;
-        }
-    }
-    return false;
-}
-
-// Restart Button Function
-function restartGame() {
-    initGame();
-}
-
-// Start first time
-initGame();
-</script>
-
-</body>
-</html> 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Advanced Shooting Game</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background: #111;
-            color: white;
-            text-align: center;
-            font-family: Arial;
-        }
-        canvas {
-            background: black;
-            display: block;
-            margin: auto;
-            border: 2px solid white;
-        }
-        button {
-            padding: 10px 20px;
-            margin-top: 10px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-
-<h2>
-🚀 Shooting Game | 
-Score: <span id="score">0</span> | 
-Lives: <span id="lives">3</span>
-</h2>
-
-<canvas id="game" width="400" height="600"></canvas>
-<br>
-<button onclick="restartGame()">Restart</button>
-
-<script>
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
-
-let player, bullets, enemies, score, lives, gameOver;
-let enemySpawnRate = 1000;
-
-function init() {
-    player = { x: 180, y: 550, width: 40, height: 20, speed: 6 };
-    bullets = [];
-    enemies = [];
-    score = 0;
-    lives = 3;
-    gameOver = false;
-    enemySpawnRate = 1000;
-
-    document.getElementById("score").innerText = score;
-    document.getElementById("lives").innerText = lives;
-}
-
-init();
-
-// Controls
-let keys = {};
-document.addEventListener("keydown", (e) => {
-    keys[e.code] = true;
-
-    if (e.code === "Space" && !gameOver) {
-        bullets.push({
-            x: player.x + player.width / 2 - 2,
-            y: player.y,
-            width: 4,
-            height: 10
-        });
-    }
-});
-document.addEventListener("keyup", (e) => {
-    keys[e.code] = false;
-});
-
-function spawnEnemy() {
-    if (!gameOver) {
-        enemies.push({
-            x: Math.random() * 360,
-            y: 0,
-            width: 40,
-            height: 20,
-            speed: 2 + Math.random() * 2
-        });
+        return "Zero";
     }
 }
+console.log("Check number:", checkNumber(-3));
 
-let spawnInterval = setInterval(spawnEnemy, enemySpawnRate);
 
-function update() {
-    if (gameOver) return;
+// 🔥 Bonus Arrow Functions
+const addArrow = (a, b) => a + b;
+const squareArrow = n => n * n;
+const isEven = n => n % 2 === 0;
 
-    // Move player
-    if (keys["ArrowLeft"] && player.x > 0)
-        player.x -= player.speed;
-
-    if (keys["ArrowRight"] && player.x < canvas.width - player.width)
-        player.x += player.speed;
-
-    // Move bullets
-    bullets.forEach((bullet, bIndex) => {
-        bullet.y -= 8;
-        if (bullet.y < 0) bullets.splice(bIndex, 1);
-    });
-
-    // Move enemies
-    enemies.forEach((enemy, eIndex) => {
-        enemy.y += enemy.speed;
-
-        // If enemy reaches bottom
-        if (enemy.y > canvas.height) {
-            enemies.splice(eIndex, 1);
-            lives--;
-            document.getElementById("lives").innerText = lives;
-
-            if (lives <= 0) {
-                gameOver = true;
-                alert("Game Over! Final Score: " + score);
-            }
-        }
-
-        // Collision
-        bullets.forEach((bullet, bIndex) => {
-            if (
-                bullet.x < enemy.x + enemy.width &&
-                bullet.x + bullet.width > enemy.x &&
-                bullet.y < enemy.y + enemy.height &&
-                bullet.y + bullet.height > enemy.y
-            ) {
-                enemies.splice(eIndex, 1);
-                bullets.splice(bIndex, 1);
-                score++;
-                document.getElementById("score").innerText = score;
-
-                // Increase difficulty every 10 points
-                if (score % 10 === 0) {
-                    clearInterval(spawnInterval);
-                    enemySpawnRate -= 100;
-                    if (enemySpawnRate < 300) enemySpawnRate = 300;
-                    spawnInterval = setInterval(spawnEnemy, enemySpawnRate);
-                }
-            }
-        });
-    });
-}
-
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Player
-    ctx.fillStyle = "lime";
-    ctx.fillRect(player.x, player.y, player.width, player.height);
-
-    // Bullets
-    ctx.fillStyle = "yellow";
-    bullets.forEach(bullet =>
-        ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height)
-    );
-
-    // Enemies
-    ctx.fillStyle = "red";
-    enemies.forEach(enemy =>
-        ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height)
-    );
-}
-
-function gameLoop() {
-    update();
-    draw();
-    requestAnimationFrame(gameLoop);
-}
-
-function restartGame() {
-    init();
-}
-
-gameLoop();
-</script>
-
-</body>
-</html> -->
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Tic Tac Toe</title>
-    <style>
-        body {
-            text-align: center;
-            font-family: Arial;
-            background: #111;
-            color: white;
-        }
-
-        .board {
-            display: grid;
-            grid-template-columns: repeat(3, 100px);
-            gap: 5px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .cell {
-            width: 100px;
-            height: 100px;
-            background: #222;
-            font-size: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-    </style>
-</head>
-<body>
-
-<h1>❌⭕ Tic Tac Toe</h1>
-<h2 id="status">Player X's Turn</h2>
-
-<div class="board" id="board"></div>
-
-<button onclick="restartGame()">Restart Game</button>
-
-<script>
-let board = ["", "", "", "", "", "", "", "", ""];
-let currentPlayer = "X";
-let gameActive = true;
-
-const statusText = document.getElementById("status");
-const boardContainer = document.getElementById("board");
-
-// Winning patterns
-const winningConditions = [
-    [0,1,2],
-    [3,4,5],
-    [6,7,8],
-    [0,3,6],
-    [1,4,7],
-    [2,5,8],
-    [0,4,8],
-    [2,4,6]
-];
-
-// Create board
-function createBoard() {
-    boardContainer.innerHTML = "";
-    board.forEach((cell, index) => {
-        const cellDiv = document.createElement("div");
-        cellDiv.classList.add("cell");
-        cellDiv.innerText = cell;
-        cellDiv.addEventListener("click", () => handleClick(index));
-        boardContainer.appendChild(cellDiv);
-    });
-}
-
-function handleClick(index) {
-    if (board[index] !== "" || !gameActive) return;
-
-    board[index] = currentPlayer;
-    checkWinner();
-    currentPlayer = currentPlayer === "X" ? "O" : "X";
-    if (gameActive) {
-        statusText.innerText = "Player " + currentPlayer + "'s Turn";
-    }
-    createBoard();
-}
-
-function checkWinner() {
-    for (let condition of winningConditions) {
-        let [a, b, c] = condition;
-
-        if (
-            board[a] !== "" &&
-            board[a] === board[b] &&
-            board[b] === board[c]
-        ) {
-            statusText.innerText = "Player " + board[a] + " Wins!";
-            gameActive = false;
-            return;
-        }
-    }
-
-    if (!board.includes("")) {
-        statusText.innerText = "It's a Draw!";
-        gameActive = false;
-    }
-}
-
-function restartGame() {
-    board = ["", "", "", "", "", "", "", "", ""];
-    currentPlayer = "X";
-    gameActive = true;
-    statusText.innerText = "Player X's Turn";
-    createBoard();
-}
-
-createBoard();
-</script>
-
-<script>
-
-  // ==========================
-// 1. Arithmetic Operators
-// ==========================
-let a = 10, b = 3;
-
-console.log(a + b);  // 13
-console.log(a - b);  // 7
-console.log(a * b);  // 30
-console.log(a / b);  // 3.33
-console.log(a % b);  // 1
-console.log(a ** b); // 1000
-
-// ==========================
-// 2. Assignment Operators
-// ==========================
-let x = 5;
-x += 2;
-x -= 1;
-x *= 2;
-x /= 3;
-x %= 2;
-x **= 3;
-
-// ==========================
-// 3. Comparison Operators
-// ==========================
-let c = 5, d = "5";
-
-console.log(c == d);   // true
-console.log(c === d);  // false
-console.log(c != d);   // false
-console.log(c !== d);  // true
-console.log(c > 3);    // true
-console.log(c < 10);   // true
-console.log(c >= 5);   // true
-console.log(c <= 4);   // false
-
-// ==========================
-// 4. Logical Operators
-// ==========================
-let p = true, q = false;
-
-console.log(p && q); // false
-console.log(p || q); // true
-console.log(!p);     // false
-
-// ==========================
-// 5. Bitwise Operators
-// ==========================
-let m = 5, n = 1;
-
-console.log(m & n);  // 1
-console.log(m | n);  // 5
-console.log(m ^ n);  // 4
-console.log(~m);     // -6
-console.log(m << 1); // 10
-console.log(m >> 1); // 2
-
-// ==========================
-// 6. String Operator
-// ==========================
-let str1 = "Hello", str2 = "JS";
-console.log(str1 + " " + str2);
-
-// ==========================
-// 7. Ternary Operator
-// ==========================
-let age = 20;
-let result = age >= 18 ? "Adult" : "Minor";
-console.log(result);
-
-// ==========================
-// 8. Type Operators
-// ==========================
-console.log(typeof 42);
-
-let arr = [1,2,3];
-console.log(arr instanceof Array);
-
-// ==========================
-// 9. Increment / Decrement
-// ==========================
-let i = 5;
-console.log(i++); // 5
-console.log(++i); // 7
-console.log(i--); // 7
-console.log(--i); // 5
-
-// ==========================
-// 10. Nullish & Optional
-// ==========================
-let val = null;
-console.log(val ?? "Default");
-
-let user = {};
-console.log(user?.name);
-
-// ==========================
-// 11. Spread & Rest
-// ==========================
-let nums = [1,2,3];
-let newNums = [...nums, 4];
-
-function sum(...args) {
-  return args.reduce((a,b) => a + b, 0);
-}
-console.log(sum(1,2,3));
-
-// ==========================
-// 12. Other Operators
-// ==========================
-let obj = {a:1};
-delete obj.a;
-
-console.log("a" in obj);
-
-let z = (1,2,3);
-console.log(z); // 3
-
-
-// <button id="btn">Click me</button>
-
-  const button = document.getElementById("btn");
-
-  button.addEventListener("click", function() {
-    alert("Button clicked!");
-  });
-
-
-
-
-</script>
-
+console.log("Arrow Add:", addArrow(2, 3));
+console.log("Arrow Square:", squareArrow(5));
+console.log("Arrow isEven:", isEven(6));
 </body>
 </html>
-
