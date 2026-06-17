@@ -87,28 +87,38 @@ console.log("Arrow Add:", addArrow(2, 3));
 console.log("Arrow Square:", squareArrow(5));
 console.log("Arrow isEven:", isEven(6)); -->
 
+<style>
+</style>
+<body>
 
+</body>
 
 <script>
-    // let num = 10;
-    // let sum = 0;
-    // let count = 0;
 
-    // for(let i=0; i<=num; i+=2){
-    //  sum += i;
-    //  count++;
-    // }
-    // console.log(`sum  = ${sum}`);
-    // console.log(count)
-
-    let num = 2485;
-
-    while(num>=0)
-{
-    let digit = num/10;
-    console.log(digit);
-    num = Math.floor(digit);
+const course= {
+    "courseName":"Js",
+    "title":"it",
+    "enroll":100,
+    "isActive":true,
+    "studentsId":["abc@gamil.com","pqr@gamil.com","xyz@gamil.com"],
+    "cousreSchedule":{
+        "Monday":"9-10",
+        "Tuesday":"9-10",
+        "wednesday":"9-10",
+        "Thursday":"9-10",
+        "Friday":"9-10",
+        "saturday":"9-10",
+        "sunday":"off"
+       
+    }
 }
+
+console.log(course)
+console.log(course.enrooll)
+console.log(course.title)
+console.log(course.cousreSchelde.Monday)
+console.log(course.studentsId[2])
+console.log(course.isActive)
+
 </script>
-</body>
 </html>
